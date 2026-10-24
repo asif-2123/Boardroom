@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101827">
+  <meta name="description" content="A personal CBSE Class 12 PCMB board exam study tracker for 2027.">
+  <title>BoardBloom — CBSE 2027 PCMB Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark">b.</div>
+        <div><strong>BoardBloom</strong><small>CLASS XII · 2027</small></div>
+      </div>
+      <div class="side-label">WORKSPACE</div>
+      <nav class="nav">
+        <button class="nav-item active" data-view="overview"><span>◫</span> Overview</button>
+        <button class="nav-item" data-view="chapters"><span>▤</span> Chapter tracker</button>
+        <button class="nav-item" data-view="tests"><span>◷</span> Mock tests</button>
+        <button class="nav-item" data-view="planner"><span>☷</span> Revision planner</button>
+        <button class="nav-item" data-view="studylog"><span>✎</span> Study log</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="mini-goal">
+          <div class="mini-goal-top"><span>YOUR GOAL</span><span class="goal-dot"></span></div>
+          <strong>90%+</strong>
+          <p>Small steps, every day.</p>
+          <div class="goal-track"><span id="side-progress"></span></div>
+          <small id="side-progress-label">0% syllabus complete</small>
+        </div>
+        <button class="nav-item" id="export-btn"><span>⇩</span> Export my data</button>
+        <button class="nav-item" id="import-btn"><span>⇧</span> Import backup</button>
+        <input type="file" id="import-file" accept="application/json" hidden>
+      </div>
+      <div class="sidebar-footer">Made for the 2027 board journey ✦</div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobile-menu" aria-label="Open menu">☰</button>
+        <div class="breadcrumb">My workspace <span>/</span> <strong id="page-name">Overview</strong></div>
+        <div class="top-actions">
+          <span class="local-save"><i></i> Saved on this device</span>
+          <button class="avatar" title="Your study space">S</button>
+        </div>
+      </header>
+
+      <section class="view active" id="view-overview">
+        <div class="welcome-row">
+          <div>
+            <div class="eyebrow"><span class="sparkle">✦</span> YOUR BOARD SEASON, YOUR PACE</div>
+            <h1>Hey, future topper<span class="period">.</span></h1>
+            <p class="subhead">You don’t have to do everything today. Just make today count.</p>
+          </div>
+          <div class="date-chip"><span>◷</span> Board Exam 2027</div>
+        </div>
+
+        <div class="hero-card">
+          <div class="hero-copy">
+            <span class="hero-kicker">YOUR NORTH STAR</span>
+            <h2>90% is a goal.<br><em>Progress is the plan.</em></h2>
+            <p>Track what you learn, practise what you miss, and come back stronger tomorrow.</p>
+            <button class="btn btn-light" data-go="chapters">Continue studying <span>↗</span></button>
+          </div>
+          <div class="hero-art" aria-hidden="true">
+            <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+            <div class="planet"><span>✦</span></div>
+            <div class="floating-note note-a">one chapter at a time</div>
+            <div class="floating-note note-b">you've got this ✿</div>
+            <div class="star star-a">✦</div><div class="star star-b">✧</div><div class="star star-c">·</div>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat-card">
+            <div class="stat-top"><span class="stat-icon purple">▤</span><span class="stat-label">SYLLABUS DONE</span></div>
+            <div class="stat-value"><span id="overall-percent">0</span><small>%</small></div>
+            <div class="progress-track"><span id="overall-bar"></span></div>
+            <p id="chapters-count">0 of 50 chapters completed</p>
+          </article>
+          <article class="stat-card">
+            <div class="stat-top"><span class="stat-icon peach">◷</span><span class="stat-label">STUDY TIME</span></div>
+            <div class="stat-value"><span id="total-hours">0</span><small>h</small></div>
+            <p class="muted">Total focused hours logged</p>
+            <button class="text-link" data-go="studylog">Add a study session ↗</button>
+          </article>
+          <article class="stat-card">
+            <div class="stat-top"><span class="stat-icon mint">↗</span><span class="stat-label">LATEST MOCK SCORE</span></div>
+            <div class="stat-value"><span id="latest-score">—</span><small id="latest-score-unit"></small></div>
+            <p id="mock-subtitle" class="muted">Your first mock is waiting</p>
+            <button class="text-link" data-go="tests">Log a mock test ↗</button>
+          </article>
+        </div>
+
+        <div class="section-heading">
+          <div><h2>Your subjects</h2><p>A little progress in each subject adds up.</p></div>
+          <button class="text-link" data-go="chapters">View all chapters ↗</button>
+        </div>
+        <div class="subject-grid" id="subject-cards"></div>
+
+        <div class="bottom-grid">
+          <section class="panel">
+            <div class="panel-heading"><div><h3>Next up</h3><p>Keep the next step small.</p></div><button class="icon-button" data-go="planner" aria-label="Open planner">↗</button></div>
+            <div id="up-next" class="up-next empty-state">Add a chapter revision date in your planner to see it here.</div>
+          </section>
+          <section class="panel quote-panel">
+            <div class="quote-mark">“</div>
+            <blockquote>Consistency beats the occasional perfect day.</blockquote>
+            <p>One focused session is still a win.</p>
+            <div class="quote-decoration">✳</div>
+          </section>
+        </div>
+      </section>
+
+      <section class="view" id="view-chapters">
+        <div class="page-header"><div><div class="eyebrow">MAKE THE SYLLABUS VISIBLE</div><h1>Chapter tracker<span class="period">.</span></h1><p class="subhead">Move every chapter forward, one clear step at a time.</p></div></div>
+        <div class="toolbar">
+          <div class="subject-tabs" id="chapter-subject-tabs">
+            <button class="subject-tab active" data-subject="All">All subjects</button>
+            <button class="subject-tab" data-subject="Physics">Physics</button>
+            <button class="subject-tab" data-subject="Chemistry">Chemistry</button>
+            <button class="subject-tab" data-subject="Mathematics">Maths</button>
+            <button class="subject-tab" data-subject="Biology">Biology</button>
+          </div>
+          <div class="filter-wrap"><span>⌕</span><input id="chapter-search" placeholder="Find a chapter..." aria-label="Search chapters"></div>
+        </div>
+        <div class="chapter-summary" id="chapter-summary"></div>
+        <div id="chapter-list" class="chapter-list"></div>
+        <p class="footnote">Chapter list is a planning aid. Always cross-check the final examinable syllabus with CBSE’s official 2026–27 curriculum.</p>
+      </section>
+
+      <section class="view" id="view-tests">
+        <div class="page-header"><div><div class="eyebrow">PRACTISE · REVIEW · IMPROVE</div><h1>Mock tests<span class="period">.</span></h1><p class="subhead">A score is feedback, not a verdict.</p></div></div>
+        <div class="test-layout">
+          <form class="panel test-form" id="test-form">
+            <div class="panel-heading"><div><h3>Log a test</h3><p>Capture the score and what to fix next.</p></div><span class="form-icon">✎</span></div>
+            <label>Test name<input name="name" required placeholder="e.g. Electrostatics chapter test"></label>
+            <div class="form-row">
+              <label>Subject<select name="subject" required><option>Physics</option><option>Chemistry</option><option>Mathematics</option><option>Biology</option></select></label>
+              <label>Date<input type="date" name="date" required></label>
+            </div>
+            <div class="form-row">
+              <label>Marks obtained<input type="number" name="score" min="0" step="0.5" required placeholder="e.g. 42"></label>
+              <label>Maximum marks<input type="number" name="max" min="1" step="0.5" required value="70"></label>
+            </div>
+            <label>What needs work?<textarea name="notes" rows="3" placeholder="Forgot formulas, ran out of time..."></textarea></label>
+            <button class="btn btn-primary" type="submit">Save test result <span>↗</span></button>
+          </form>
+          <section class="panel test-trend">
+            <div class="panel-heading"><div><h3>Score trend</h3><p>Your latest results, at a glance.</p></div></div>
+            <div class="score-visual" id="score-visual"><div class="empty-state">Log your first test to start a trend.</div></div>
+            <div class="trend-legend"><span><i class="legend-dot"></i> Your score (%)</span><span><i class="legend-line"></i> 90% goal</span></div>
+          </section>
+        </div>
+        <section class="panel history-panel">
+          <div class="panel-heading"><div><h3>Test history</h3><p>Use mistakes as your revision list.</p></div><span id="test-count" class="count-pill">0 tests</span></div>
+          <div class="table-wrap"><table><thead><tr><th>Test</th><th>Subject</th><th>Date</th><th>Score</th><th>Review note</th><th></th></tr></thead><tbody id="test-history"></tbody></table></div>
+        </section>
+      </section>
+
+      <section class="view" id="view-planner">
+        <div class="page-header"><div><div class="eyebrow">MAKE FUTURE-YOU A FAVOUR</div><h1>Revision planner<span class="period">.</span></h1><p class="subhead">Schedule the next review before the chapter fades.</p></div></div>
+        <div class="planner-layout">
+          <form class="panel planner-form" id="planner-form">
+            <div class="panel-heading"><div><h3>Plan a revision</h3><p>Choose a chapter and a date.</p></div></div>
+            <label>Subject<select name="subject" id="planner-subject" required><option>Physics</option><option>Chemistry</option><option>Mathematics</option><option>Biology</option></select></label>
+            <label>Chapter<select name="chapter" id="planner-chapter" required></select></label>
+            <label>Revision date<input type="date" name="date" required></label>
+            <label>Revision focus<select name="focus"><option>Recall concepts</option><option>Solve PYQs</option><option>Practise numericals</option><option>Diagrams and definitions</option><option>Timed mini-test</option></select></label>
+            <button class="btn btn-primary" type="submit">Add to planner <span>↗</span></button>
+          </form>
+          <section class="panel">
+            <div class="panel-heading"><div><h3>Upcoming revisions</h3><p>Past-due items stay visible until you complete them.</p></div><span class="calendar-icon">▦</span></div>
+            <div id="revision-list" class="revision-list"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="view" id="view-studylog">
+        <div class="page-header"><div><div class="eyebrow">SHOW UP FOR YOURSELF</div><h1>Study log<span class="period">.</span></h1><p class="subhead">Count focused effort, not just time at your desk.</p></div></div>
+        <div class="study-layout">
+          <form class="panel study-form" id="study-form">
+            <div class="panel-heading"><div><h3>Log a session</h3><p>What did you work on today?</p></div><span class="form-icon">✦</span></div>
+            <label>Date<input name="date" type="date" required></label>
+            <label>Subject<select name="subject" required><option>Physics</option><option>Chemistry</option><option>Mathematics</option><option>Biology</option><option>Mixed revision</option></select></label>
+            <div class="form-row">
+              <label>Hours<input name="hours" type="number" min="0.25" max="18" step="0.25" required placeholder="1.5"></label>
+              <label>Focus /10<input name="focus" type="number" min="1" max="10" step="1" value="7" required></label>
+            </div>
+            <label>What did you finish?<textarea name="notes" rows="3" placeholder="Solved 12 integration questions..."></textarea></label>
+            <button class="btn btn-primary" type="submit">Save study session <span>↗</span></button>
+          </form>
+          <section class="panel study-overview">
+            <div class="panel-heading"><div><h3>Your effort</h3><p>Recent logged study time.</p></div></div>
+            <div class="study-big"><span id="study-total-big">0</span><small>hours total</small></div>
+            <div class="weekly-bars" id="weekly-bars"></div>
+            <p class="muted small">This chart reflects the sessions you log here, not activity tracking.</p>
+          </section>
+        </div>
+        <section class="panel history-panel">
+          <div class="panel-heading"><div><h3>Recent sessions</h3><p>Every session counts.</p></div><span id="session-count" class="count-pill">0 sessions</span></div>
+          <div id="study-history" class="study-history"></div>
+        </section>
+      </section>
+
+      <footer class="app-footer"><span>BoardBloom <b>·</b> built for steady progress</span><span>Remember to take breaks and sleep well ✦</span></footer>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
